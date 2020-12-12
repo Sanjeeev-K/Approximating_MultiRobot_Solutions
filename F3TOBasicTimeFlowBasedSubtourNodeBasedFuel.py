@@ -33,6 +33,20 @@ class F3Solver:
         self.T_max = instance.T_max
         #R = json_data['R']
         self.T_loc = instance.T_loc
+
+        # #Adding stuff here
+        # # self.sum_of_all_task_distances_from_origin = instance.sum_of_all_task_distances_from_origin
+        # # self.mean_task_distance = instance.mean_task_distance
+        # self.sum_of_all_task_distances_from_origin = 0.0
+        # for i in range (self.noOfTasks):
+        #     x = self.T_loc["T" + str(i)][0]
+        #     y = self.T_loc["T" + str(i)][1]
+        #     self.sum_of_all_task_distances_from_origin += math.sqrt (x**2 + y**2)
+        # self.mean_task_distance = self.sum_of_all_task_distances_from_origin/self.noOfTasks
+        # self.initial_noOfRobots = self.noOfRobots
+        # self.noOfRobots = int (self.mean_task_distance / self.delta )
+
+
         self.D_loc = instance.D_loc
         self.S_loc = instance.S_loc
         self.E_loc = instance.E_loc
@@ -124,7 +138,7 @@ class F3Solver:
         #self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
         # model.params.MIPGapAbs = 0.0005
         # self.model.params.TimeLimit = 30
-        self.model.Params.MIPGap = 1e-3
+        self.model.Params.MIPGap = 1e-4
         self.model.optimize()
 
         return self.model 
@@ -135,6 +149,12 @@ class F3Solver:
         # Save runtime, because after writing the lp file, 
         # runtime is lost. No idea why
         run_time = self.model.Runtime
+        print("************ Run Time******", run_time)
+        # print("************ Sum of distances ", self.sum_of_all_task_distances_from_origin)
+        # print("************ Mean Dist", self.mean_task_distance)
+        # print("************ No of Tasks", self.noOfTasks)
+        # print("************ Initial No of robots", self.initial_noOfRobots)
+        # print("************ No of robots ", self.noOfRobots)
         # Write both the LP file and the solution file
         self.model.write(self.file_path+'.lp')
         self.model.write(self.file_path+'.sol')
@@ -144,20 +164,22 @@ class F3Solver:
 
 
 def main():
-    min_robots = 2
-    max_robots = 2
+    min_robots = 1
+
+
+    max_robots = min_robots
 
     min_depots = 1
     max_depots = 1
 
-    min_tasks = 10
-    max_tasks = 10
+    min_tasks = 20
+    max_tasks = 20
 
-    delta_range_start = 300
+    delta_range_start = 300 #300
     delta_range_step = 100
     # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               delta_range_step)*delta_range_step)  # ~282
-    delta_range_end = 300
+    delta_range_end = 300 #300
 
     Tmax_range_start = 600
     Tmax_range_step = 100
@@ -173,8 +195,8 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 1
-    iter_no_list = [0]
+    no_of_instances = 1 
+    iter_no_list = [0] #1.
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
@@ -197,6 +219,7 @@ def main():
                             solver = F3Solver(instance_data)
                             model = solver.solve()
                             solver.write_lp_and_sol_to_disk()
+    # print("Total run time", self.run)
 
 if __name__ == "__main__":
     main()

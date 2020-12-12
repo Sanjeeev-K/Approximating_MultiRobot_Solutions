@@ -130,7 +130,8 @@ class SolutionPlotter:
                     line_color="Black",
                     line_width=1
                 )])
-        py.plot(fig)
+        py.plot(fig,filename = 'temp-plot'+str(self.instance_string[-1]))
+        # fig.write_image("fig1.png")
     
     def compute_path_lengths(self):
         self.path_length = {k:0 for k in self.instance.K}
@@ -143,15 +144,20 @@ class SolutionPlotter:
 
 
 def main():
-    instance_prefix = 'R2D1T10Delta300Tmax600Iter0'
+    instance_prefix = 'D1T10Delta300Tmax600Iter'
     #no_of_instances = 10
-    #iter_no_list = [2]
-    #iter_no_list = [i for i in range(no_of_instances)]
-    list_of_formulations = [1,2,3,4,5,6,7,8]    
+    iter_no_list = [0]
+    r_list = [2]
+    # iter_no_list = [i for i in range(no_of_instances)]
+    # list_of_formulations = [1,2,3,4,5,6,7,8]    
+    list_of_formulations = [3]  
     for i in list_of_formulations:
-        instance_name = 'F'+str(i)+instance_prefix
-        plot = SolutionPlotter(instance_name)
-        plot.create_plot_and_show()
+        for j in iter_no_list:
+            for r in r_list:
+                instance_name = 'F'+str(i)+'R'+str(r) + instance_prefix+str(j)
+                # instance_name = 'F'+str(i)+instance_prefix+str(j)
+                plot = SolutionPlotter(instance_name)
+                plot.create_plot_and_show()
 
 
 if __name__ == "__main__":

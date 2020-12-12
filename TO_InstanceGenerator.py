@@ -57,6 +57,21 @@ class Instance_Generator:
         # R = {task: 1 for task in T}
 
         self.T_loc = {task: (self.random_xy_loc_in_circle()) for task in self.T}
+
+        # for tasks equally distributed in a circle
+        # for i in range (self.noOfTasks):
+            # self.T_loc["T" + str(i)]= (0.5*self.arenaRadius*math.cos(2*math.pi*(i/(self.noOfTasks))),0.5*self.arenaRadius*math.sin(2*math.pi*(i/(self.noOfTasks))))
+            # self.T_loc["T" + str(i)]= (0.5*self.arenaRadius*math.cos(2*math.pi*(2*i/(self.noOfTasks)))+0.1*i,0.1*i + 0.5*self.arenaRadius*math.sin(2*math.pi*(2*i/(self.noOfTasks))))
+            # self.T_loc["T" + str(i)]= (0.5*self.arenaRadius,0.5*self.arenaRadius)
+
+        # self.sum_of_all_task_distances_from_origin = 0.0
+        # for i in range (self.noOfTasks):
+        #     x = self.T_loc[i][0]
+        #     y = self.T_loc[i][1]
+        #     self.sum_of_all_task_distances_from_origin += math.sqrt (x**2 + y**2)
+        # self.mean_task_distance = self.sum_of_all_task_distances_from_origin/self.noOfTasks
+        # self.noOfRobots = int (self.mean_task_distance / self.delta )
+
         
         # Set Depot locations based on number of robots.
         # If |D| = 1 : Place it at the center
@@ -161,14 +176,14 @@ class Instance_Generator:
 
 
 def main():
-    min_robots = 2
-    max_robots = 4
+    min_robots = 1
+    max_robots = 10
 
     min_depots = 1
     max_depots = 3
 
-    min_tasks = 5
-    max_tasks = 10
+    min_tasks = 2 # not useful
+    max_tasks = 10 # not useful
 
     delta_range_start = 150
     delta_range_step = 100
@@ -185,7 +200,7 @@ def main():
     robots_range = list(range(min_robots, max_robots+1))
     depots_range = list(range(min_depots, max_depots+1))
     #tasks_range = list(range(min_tasks, max_tasks+1))
-    tasks_range = [5,10]
+    tasks_range = [25,30,35,40]                                                        # change here.
     #delta_range = list(range(delta_range_start, delta_range_end +
     #                        delta_range_step, delta_range_step))
     delta_range = [300, 600]
@@ -195,7 +210,7 @@ def main():
 
     no_of_instances = 10
     #seed_list = [rnd.randrange(sys.maxsize) for i in range(no_of_instances)]
-    seed_list = [1679156726667891580,
+    seed_list = [1679156726667891581,
                 1650489432282747979,
                 3433114415903346549,
                 5237005969715870065,

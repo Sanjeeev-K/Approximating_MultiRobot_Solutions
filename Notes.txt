@@ -1,0 +1,10 @@
+Notes
+
+
+6 Tasks : 
+F7 with Parameter tuning no of robots
+        vs
+F3 with 1,2,3,4,5,6 no of robots.
+
+
+Heuristic : no_of_robots = Dist(1 for_loop) / Delta.
